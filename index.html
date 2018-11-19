@@ -10,6 +10,7 @@
 </head>
 <body>
   {% include 'assets/snippets/header.html' %}
+  {% include 'assets/snippets/footer.html' %}
 
   <div class="tiles-container"></div>
 
@@ -25,10 +26,8 @@
     </div>
   </div>
 
-  {% include 'assets/snippets/footer.html' %}
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/chenrob/odl-tiles2.1/jquery.tileUI.js"></script>
+  <script src="/assets/snippets/tileUI.js"></script>
 
   <script type="text/javascript">
     (function($) {
@@ -37,8 +36,6 @@
       const $template = $('.tile.template');
       const $modal = $('.modal');
       const $modalImage = $('.modal .dog-picture');
-
-      const dogsAr = [];
 
       $(document)
         .on('click', '.close, .modal-overlay', function(e) {
@@ -50,18 +47,15 @@
         })
         .on('click', '.tile', function(e) {
           const $tile = $(this);
-          const dog = dogsAr[$tile.data('index')];
 
-          $modalImage.attr('src', dog.image);
+          $modalImage.attr('src', $tile.data('img'));
 
           $body.addClass('overlay');
         });
 
-      function buildTile(dog, i) {
-        const $tile = $template
-          .clone()
-          .removeClass('template')
-          .data('index', i);
+      function buildTile(dog) {
+        const $tile = $template.clone();
+        $tile.removeClass('template').data('img', dog.image);
 
         $tile.find('.dog-picture').attr('src', dog.image);
 
@@ -69,14 +63,18 @@
       };
 
       $.getJSON('/dogs', function(response) {
-        response.dogs.forEach(function(dog) {
-          const $tile = buildTile(dog, dogsAr.length);
+        const $tiles = response.dogs.map(buildTile);
+        $container.append($tiles);
 
-          dogsAr.push(dog);
-          $container.append($tile);
+        $container.tileUI({
+          "infiniteScroll": true,
+          "nextUrl": "/dogs",
+          "maxPages": Number.POSITIVE_INFINITY,
+          "columnGap": 35,
+          "buildTiles": function(response) {
+            return response.dogs.map(buildTile);
+          }
         });
-
-        $container.tileUI();
       });
     })(jQuery);
   </script>

@@ -5,6 +5,16 @@
   --color-secondary: #333;
   --color-link: #635ac7;
 
+  --color-tile-box-shadow: rgba(0, 0, 0, 0.3);
+
+  --color-modal-overlay: rgba(0, 0, 0, 0.4);
+  --color-modal-box-shadow: rgba(0, 0, 0, 0.5);
+  --color-modal-close-bg: #b1b1b1;
+  --color-modal-close-shadow: rgba(0, 0, 0, 0.5);
+  --color-modal-close-primary: #fff;
+
+  --color-bg: #fff;
+
   font-family: var(--font-sans);
   font-weight: normal;
   line-height: 1.5;
@@ -48,7 +58,27 @@ img {
 }
 
 .global-footer {
-  clear: both;
+  margin-bottom: 2rem;
+}
+
+/* Tiles */
+.tile-column:first-child {
+  margin-left: 0;
+}
+
+.tile {
+  width: 200px;
+
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+
+  box-shadow: 0 0 3px var(--color-tile-box-shadow);
+  cursor: pointer;
+}
+
+.tile.template {
+  display: none;
 }
 
 /* Modals */
@@ -69,8 +99,8 @@ body.overlay .modal-overlay {
   right: 0;
   bottom: 0;
 
-  background: rgba(0, 0, 0, 0.4);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background: var(--color-modal-overlay);
+  box-shadow: 0 0 10px var(--color-modal-box-shadow);
 }
 
 .modal {
@@ -82,8 +112,8 @@ body.overlay .modal-overlay {
   padding: 20px;
   border-radius: 5px;
 
-  background: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background: var(--color-bg);
+  box-shadow: 0 0 10px var(--color-modal-box-shadow);
 }
 
 .modal .close {
@@ -95,49 +125,29 @@ body.overlay .modal-overlay {
   height: 1em;
   padding: 0.1em;
 
-  border: 2px solid #fff;
+  border: 2px solid var(--color-modal-close-primary);
   border-radius: 1em;
 
-  background: #b1b1b1;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  background: var(--color-modal-close-bg);
+  box-shadow: 0 0 5px var(--color-modal-close-shadow);
 
   text-align: center;
   font-size: 1.2em;
   line-height: 0.8;
   font-weight: bold;
-  color: #fff;
+  color: var(--color-modal-close-primary);
 
   cursor: pointer;
 }
 
 .modal .dog-picture {
-  max-width: 500px;
-  max-height: 500px;
+  max-width: 290px;
+  max-height: 290px;
 }
 
-/* Tiles */
-.tile-column {
-  position: static !important; /* cancel out my stupidity from 6 years ago */
-
-  margin-left: 15px;
-  float: left;
-}
-
-.tile-column:first-child {
-  margin-left: 0;
-}
-
-.tile {
-  max-width: 200px;
-
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 5px 5px 0 0;
-
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-}
-
-.tile.template {
-  display: none;
+@media (min-width: 767px) {
+  .modal .dog-picture {
+    max-width: 500px;
+    max-height: 500px;
+  }
 }
