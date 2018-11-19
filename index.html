@@ -17,9 +17,12 @@
     <img src="" class="dog-picture" />
   </div>
 
-  <div class="modal-overlay"></div>
-  <div class="modal">
-    <img src="" class="dog-picture" />
+  <div class="modal-overlay">
+    <div class="modal">
+      <span class="close">&times;</span>
+
+      <img src="" class="dog-picture" />
+    </div>
   </div>
 
   {% include 'assets/snippets/footer.html' %}
@@ -29,8 +32,36 @@
 
   <script type="text/javascript">
     (function($) {
-      function buildTile(dog) {
-        var $tile = $template.clone().removeClass('template');
+      const $body = $('body');
+      const $container = $('.tiles-container');
+      const $template = $('.tile.template');
+      const $modal = $('.modal');
+      const $modalImage = $('.modal .dog-picture');
+
+      const dogsAr = [];
+
+      $(document)
+        .on('click', '.close, .modal-overlay', function(e) {
+          $body.removeClass('overlay');
+        })
+        .on('click', '.modal', function(e) {
+          // prevent closing modal when it's clicked
+          e.stopPropagation();
+        })
+        .on('click', '.tile', function(e) {
+          const $tile = $(this);
+          const dog = dogsAr[$tile.data('index')];
+
+          $modalImage.attr('src', dog.image);
+
+          $body.addClass('overlay');
+        });
+
+      function buildTile(dog, i) {
+        const $tile = $template
+          .clone()
+          .removeClass('template')
+          .data('index', i);
 
         $tile.find('.dog-picture').attr('src', dog.image);
 
@@ -39,8 +70,9 @@
 
       $.getJSON('/dogs', function(response) {
         response.dogs.forEach(function(dog) {
-          var $tile = buildTile(dog);
+          const $tile = buildTile(dog, dogsAr.length);
 
+          dogsAr.push(dog);
           $container.append($tile);
         });
 
