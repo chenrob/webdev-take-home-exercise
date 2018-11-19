@@ -40,3 +40,39 @@ a {
   font-family: var(--font-serif);
   text-align: center;
 }
+
+/* ------------------------- */
+.global-footer {
+  clear: both;
+}
+
+/* Tiles */
+.tile-column {
+  position: static !important; /* cancel out my stupidity from 6 years ago */
+
+  margin-left: 15px;
+  float: left;
+}
+
+.tile-column:first-child {
+  margin-left: 0;
+}
+
+.tile {
+  max-width: 200px;
+
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.tile.template {
+  display: none;
+}
+
+.tile .dog-picture {
+  max-width: 100%;
+}

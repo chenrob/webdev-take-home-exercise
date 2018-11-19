@@ -1,1 +1,52 @@
-<!-- Put your final HTML here -->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Asana | Pet Adoption Agency in San Francisco</title>
+  <meta name="description" content="Asana is the premier pet adoption agency in San Francisco">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+  {% include 'assets/snippets/header.html' %}
+
+  <div class="tiles-container"></div>
+
+  <div class="tile template">
+    <img src="" class="dog-picture" />
+  </div>
+
+  <div class="modal-overlay"></div>
+  <div class="modal">
+    <img src="" class="dog-picture" />
+  </div>
+
+  {% include 'assets/snippets/footer.html' %}
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/chenrob/odl-tiles2.1/jquery.tileUI.js"></script>
+
+  <script type="text/javascript">
+    (function($) {
+      function buildTile(dog) {
+        var $tile = $template.clone().removeClass('template');
+
+        $tile.find('.dog-picture').attr('src', dog.image);
+
+        return $tile;
+      };
+
+      $.getJSON('/dogs', function(response) {
+        response.dogs.forEach(function(dog) {
+          var $tile = buildTile(dog);
+
+          $container.append($tile);
+        });
+
+        $container.tileUI();
+      });
+    })(jQuery);
+  </script>
+</body>
+</html>
